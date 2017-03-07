@@ -124,8 +124,8 @@ public class StakeServiceImpl implements StakeService{
     
     @Override
     public Double getAllCash(final long raceId) {
-        //return this.repository.getStreamByRaceId(raceId).mapToDouble(Stake::getStakeValue).sum();
         return this.repository.getAllCashByRaceId(raceId);
+        //return this.repository.getStreamByRaceId(raceId).mapToDouble(Stake::getStakeValue).sum();
     }
     
     @Override
@@ -141,12 +141,12 @@ public class StakeServiceImpl implements StakeService{
     @Override
     @Transactional
     public void setUneditable(final long raceId) {
+        this.repository.setUneditable(raceId);
         /*this.repository.save(
                 this.repository.getListByRaceId(raceId).stream()
                         .peek(stake -> stake.setEditable(false))
                         .collect(Collectors.toList())
         );*/
-        this.repository.setUneditable(raceId);
     }
     
     private void updateUserAndStationAccounts(final Double difValue, final long userId){

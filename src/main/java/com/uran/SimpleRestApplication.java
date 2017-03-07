@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
@@ -20,7 +22,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 @Import({RestSecurityConfig.class, DataSourceConfig.class, ScheduledTaskConfig.class})
 @PropertySource(value= {"classpath:application.properties"})
 @EnableJpaRepositories(basePackages = "com.uran.repository")
-public class SimpleRestApplication {
+public class SimpleRestApplication extends SpringBootServletInitializer {
     private static final Logger LOG = getLogger(SimpleRestApplication.class);
     
     public static int NUMBER_OF_HORSES_FOR_RACE;
@@ -42,7 +44,10 @@ public class SimpleRestApplication {
     public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
-    
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(SimpleRestApplication.class);
+    }
 }
 
 /*@Bean(name = "authProvider")
