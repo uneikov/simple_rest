@@ -34,7 +34,7 @@ public class Stake implements Serializable{
     @Column(nullable = false, columnDefinition = "timestamp default now()")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private @Setter @Getter LocalDateTime dateTime = LocalDateTime.now();
+    private LocalDateTime dateTime = LocalDateTime.now();
     
     @Column(nullable = false)
     private boolean wins;
@@ -51,7 +51,7 @@ public class Stake implements Serializable{
     
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     //@JsonBackReference(value="stake-user")
-    private @Setter @Getter User user;
+    private User user;
     
     @NotNull
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

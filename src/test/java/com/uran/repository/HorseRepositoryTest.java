@@ -1,18 +1,22 @@
 package com.uran.repository;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.uran.domain.Horse;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -23,6 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class HorseRepositoryTest {
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper mapper;
     
     @Test
     @WithMockUser(username = "User1", password = "password1", roles = "USER")
@@ -69,9 +75,16 @@ public class HorseRepositoryTest {
                 .andExpect(jsonPath("page.totalElements").value(10));
     }
     
-}
-/* this.mockMvc.perform(post("/api/races")
+    @Test
+    @WithMockUser(username = "Admin", password = "admin", roles = "ADMIN")
+    public void shouldCreateNewHorse() throws Exception {
+        Horse added = new Horse("Tornado", "Торнадо", 3, 0);
+        ResultActions resultActions = this.mockMvc.perform(post("/api/horses")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(mapper.writeValueAsString(horse)))
-                .andExpect(status().isMethodNotAllowed());
-*/
+                .content(mapper.writeValueAsString(added)))
+                .andDo(print())
+                .andExpect(status().isCreated());
+        Horse horse = mapper.readValue(resultActions.andReturn().getResponse().getContentAsString(), Horse.class);
+        Assert.assertEquals(added.toString(), horse.toString());
+    }
+}
