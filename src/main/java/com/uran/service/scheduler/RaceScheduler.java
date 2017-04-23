@@ -48,6 +48,9 @@ public final class RaceScheduler implements ApplicationEventPublisherAware {
     private final RaceProcessor processor;
     private final RaceService raceService;
     
+   /* public RaceScheduler() {
+    }*/
+    
     public RaceScheduler(RaceSimulationHelper helper, RaceProcessor processor, RaceService raceService) {
         this.helper = helper;
         this.processor = processor;

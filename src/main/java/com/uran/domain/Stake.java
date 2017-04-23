@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
@@ -15,6 +16,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
+@NoArgsConstructor
 @ToString(exclude={"id","horse","user","race"})
 @Table(name = "stakes", uniqueConstraints = {
         @UniqueConstraint(columnNames = "id"),
@@ -31,25 +33,25 @@ public class Stake implements Serializable{
     private Double stakeValue;
     
     @NaturalId
-    @Column(nullable = false, columnDefinition = "timestamp default now()")
+    @Column(updatable = false, nullable = false, columnDefinition = "timestamp default now()")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateTime = LocalDateTime.now();
     
     @Column(nullable = false)
-    private boolean wins;
+    private boolean wins = false;
     
     @Column(nullable = false)
-    private Double amount;
+    private Double amount = 0.0;
     
     @Column(nullable = false)
-    private boolean editable;
+    private boolean editable = true;
     
     @NotNull
     @OneToOne(optional = false, fetch = FetchType.EAGER)
-    private @Setter @Getter Horse horse;
+    private Horse horse;
     
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne( optional = false, fetch = FetchType.LAZY)
     //@JsonBackReference(value="stake-user")
     private User user;
     
@@ -58,55 +60,12 @@ public class Stake implements Serializable{
     //@JsonBackReference(value="stake-race")
     private @Setter @Getter Race race;
     
-    public Stake() {
-    }
-    
-    public Stake(Double stakeValue, boolean wins, Double amount) {
-        this.stakeValue = stakeValue;
-        this.wins = wins;
-        this.amount = amount;
-        this.editable = true;
-    }
-    
-    public Stake(Long id, Double stakeValue, boolean wins, Double amount) {
-        this.id = id;
-        this.stakeValue = stakeValue;
-        this.wins = wins;
-        this.amount = amount;
-        this.editable = true;
-    }
-    
-    public Stake(Long id, User user, Horse horse, Double stakeValue, boolean wins, Double amount) {
-        this.id = id;
-        this.user = user;
-        this.horse = horse;
-        this.stakeValue = stakeValue;
-        this.wins = wins;
-        this.amount = amount;
-        this.editable = true;
-    }
-    
-    public Stake(Long id, User user, Horse horse, Double stakeValue, LocalDateTime dateTime, boolean wins, Double amount, boolean editable) {
-        this.id = id;
-        this.user = user;
-        this.horse = horse;
-        this.stakeValue = stakeValue;
-        this.dateTime = dateTime;
-        this.wins = wins;
-        this.amount = amount;
-        this.editable = editable;
-    }
-    
-    public Stake(Long id, User user, Horse horse, Race race, Double stakeValue, LocalDateTime dateTime, boolean wins, Double amount, boolean editable) {
+    public Stake(Long id, User user, Horse horse, Race race, Double stakeValue) {
         this.id = id;
         this.user = user;
         this.horse = horse;
         this.race = race;
         this.stakeValue = stakeValue;
-        this.dateTime = dateTime;
-        this.wins = wins;
-        this.amount = amount;
-        this.editable = editable;
     }
     
     public Long getId() {
@@ -163,5 +122,13 @@ public class Stake implements Serializable{
     
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+    
+    public Horse getHorse() {
+        return horse;
+    }
+    
+    public void setHorse(Horse horse) {
+        this.horse = horse;
     }
 }

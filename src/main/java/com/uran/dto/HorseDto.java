@@ -41,9 +41,9 @@ public class HorseDto implements Serializable {
         this.id = id;
     }
     
-    public boolean isNew() {
+    /*public boolean isNew() {
         return id == null;
-    }
+    }*/
     
     public String getName() {
         return name;

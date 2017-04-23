@@ -3,10 +3,7 @@ package com.uran.util.horse;
 import com.uran.domain.Horse;
 import com.uran.dto.HorseDto;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class HorseUtil {
@@ -31,12 +28,11 @@ public class HorseUtil {
     }
     
     // return map(en_name->ru_name, ...)
-    private static Map<String, String> getDeserialized(final String horses) {
+    public static Map<String, String> getDeserialized(final String horses) {
         return Arrays.stream(horses.split(","))
                 .sorted()
-                .map(s -> s.split(":"))
-                .collect(Collectors.toMap(s -> s[0], s -> s[1]));
-        
+                .map(names -> names.split(":"))
+                .collect(Collectors.toMap(name -> name[0],  name-> name[1]));
     }
     
 }

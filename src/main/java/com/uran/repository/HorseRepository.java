@@ -22,6 +22,6 @@ public interface HorseRepository extends JpaRepository<Horse, Long> {
     @Override
     List<Horse> findAll();
     
-    //Horse findByName(@Param("name") String name);
+    Horse findByName(@Param("name") String name);
     //Horse findByRuName(@Param("name") String name);
 }

@@ -10,6 +10,7 @@ public interface HorseService {
     //Page<Horse> findAll(Pageable pageable);
     List<Horse> findAll();
     Horse findById(long id);
+    Horse findByName(String name);
     void delete(long id);
     Horse save(Horse horse);
     List<Horse> save(List<Horse> horse);

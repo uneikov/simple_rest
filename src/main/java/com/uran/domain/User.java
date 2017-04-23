@@ -46,7 +46,7 @@ public class User implements Serializable{
     @Column(nullable = false)
     private boolean enabled = true;
     
-    @Column(columnDefinition = "timestamp default now()")
+    @Column(updatable = false, columnDefinition = "timestamp default now()")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private @Setter @Getter Date registered = new Date();

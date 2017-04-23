@@ -123,11 +123,7 @@ public class RaceSimulationHelperImpl implements RaceSimulationHelper{
                         botUser,
                         RandomUtil.getRandomHorseFromList(selectedHorses),
                         getCurrentRace(),
-                        stakeValue,
-                        LocalDateTime.now(),
-                        false,
-                        0.0d,
-                        false
+                        stakeValue
                 ));
         LOG.info("Bot {} make stake as big as {} at {} minute",
                 botUser.getName(), stakeValue, stake.getDateTime().getMinute());

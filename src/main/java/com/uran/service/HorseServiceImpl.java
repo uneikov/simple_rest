@@ -33,6 +33,11 @@ public class HorseServiceImpl implements HorseService {
     }
     
     @Override
+    public Horse findByName(String name) {
+        return this.repository.findByName(name);
+    }
+    
+    @Override
     public void delete(long id) {
         this.repository.delete(id);
     }
