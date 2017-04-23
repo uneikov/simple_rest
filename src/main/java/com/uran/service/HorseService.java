@@ -15,7 +15,7 @@ public interface HorseService {
     Horse save(Horse horse);
     List<Horse> save(List<Horse> horse);
     Horse update(Horse horse);
-    Horse update(HorseDto horseDto);
+   //Horse update(HorseDto horseDto);
     //List<Horse> findByReadyTrue();
     void addWins(long horseId);
 }

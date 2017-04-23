@@ -42,11 +42,11 @@ public class StakeRestControllerTest {
     
     @Before
     public void setUp() throws Exception {
-        RaceScheduler raceScheduler = new RaceScheduler(null, null, null);
+        RaceScheduler testRaceScheduler = new RaceScheduler(null, null, null);
         Field currentRace = RaceScheduler.class.getDeclaredField("currentRace");
         currentRace.setAccessible(true);
         Race testRace = raceService.findById(4L);
-        currentRace.set(raceScheduler, testRace);
+        currentRace.set(testRaceScheduler, testRace);
     }
     
     @Test

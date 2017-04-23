@@ -12,8 +12,6 @@ import java.io.Serializable;
 public class HorseDto implements Serializable {
     private static final long serialVersionUID = 5417510729237127721L;
     
-    private Long id;
-    
     @Size(min = 2, max = 25)
     @NotEmpty(message = "  is required")
     private String name;
@@ -26,25 +24,12 @@ public class HorseDto implements Serializable {
     @DecimalMin("1")
     private Integer age;
     
-    public HorseDto(Long id, String name, String ruName, Integer age) {
-        this.id = id;
+    public HorseDto(String name, String ruName, Integer age) {
         this.name = name;
         this.ruName = ruName;
         this.age = age;
     }
-    
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
-    /*public boolean isNew() {
-        return id == null;
-    }*/
-    
+
     public String getName() {
         return name;
     }
@@ -68,14 +53,13 @@ public class HorseDto implements Serializable {
     public void setAge(Integer age) {
         this.age = age;
     }
-    
+
     @Override
     public String toString() {
-        return "HorseDTO{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + ", ruName='" + ruName + '\''
-                + ", age=" + age
-                + '}';
+        return "HorseDto{" +
+                "name='" + name + '\'' +
+                ", ruName='" + ruName + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

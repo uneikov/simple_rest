@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 @NoArgsConstructor
 public class StakeDto implements Serializable{
-    
     private static final long serialVersionUID = 6877055670850941808L;
     
     @NotNull(message = "  must not be empty")

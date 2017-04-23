@@ -31,7 +31,7 @@ public class HorseRestControllerTest {
     @Test
     @WithMockUser(username = "Admin", password = "admin", roles = "ADMIN")
     public void shouldAddHorseFromHorseDto() throws Exception {
-        HorseDto added = new HorseDto(null,"Tornado", "Торнадо", 3);
+        HorseDto added = new HorseDto("Tornado", "Торнадо", 3);
         this.mockMvc.perform(post("/api/horses/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsString(added)))

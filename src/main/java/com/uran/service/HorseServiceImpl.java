@@ -57,12 +57,12 @@ public class HorseServiceImpl implements HorseService {
         return this.repository.save(horse);
     }
     
-    @Override
-    @Transactional
+    //@Override
+    /*@Transactional
     public Horse update(HorseDto horseDto) {
         Horse horse = updateFromTo(this.repository.findOne(horseDto.getId()), horseDto);
         return this.repository.save(horse);
-    }
+    }*/
     
     /*@Override
     public List<Horse> findByReadyTrue() {

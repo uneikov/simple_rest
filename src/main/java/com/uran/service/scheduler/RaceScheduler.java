@@ -48,9 +48,6 @@ public final class RaceScheduler implements ApplicationEventPublisherAware {
     private final RaceProcessor processor;
     private final RaceService raceService;
     
-   /* public RaceScheduler() {
-    }*/
-    
     public RaceScheduler(RaceSimulationHelper helper, RaceProcessor processor, RaceService raceService) {
         this.helper = helper;
         this.processor = processor;
@@ -64,6 +61,7 @@ public final class RaceScheduler implements ApplicationEventPublisherAware {
         stationEventPublisher.publishEvent(new GambleEvent(this, "gamble started"));
         
         start = now();
+
         RACE_IS_RUNNING = false;
         USERS_CAN_MAKE_STAKES = true;
         
