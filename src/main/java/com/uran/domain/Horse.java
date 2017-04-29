@@ -37,11 +37,11 @@ public class Horse implements Serializable{
     
     @Digits(fraction = 0, integer = 4)
     @Column(nullable = false)
-    private int wins;
+    private int wins = 0;
     
     @Column(nullable = false)
     //@JsonProperty("readyForRace")
-    private boolean ready;
+    private boolean ready = false;
     
     public Horse(String name, String ruName, int age, int wins) {
         this(null, name, ruName, age, wins);

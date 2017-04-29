@@ -41,7 +41,7 @@ public interface StakeService {
     
     List<Stake> processWinningStakes(List<Stake> winningStakes, Map<Long, Double> winningMap);
     
-    void setNotEditable(long raceId);
+    Long setNotEditable(long raceId);
     
     void setUneditable(long raceId);
 }

@@ -24,9 +24,9 @@ public class UserDto implements Serializable {
     @NotEmpty
     @SafeHtml
     private String email;
-    
-    @Size(min = 5, max = 64, message = " must between 5 and 64 characters")
+
     @SafeHtml
+    @Size(min = 5, max = 64, message = " must between 5 and 64 characters")
     private String password;
     
     public UserDto(Long id, String name, String email, String password) {

@@ -3,9 +3,7 @@ package com.uran.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,6 +20,7 @@ import java.time.LocalDateTime;
         @UniqueConstraint(columnNames = "id"),
         @UniqueConstraint(columnNames = "datetime") })
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+@NamedQuery(name = "Stake.setUneditable", query = "update Stake s set s.editable=false where s.race.id=?1")
 public class Stake implements Serializable{
     private static final long serialVersionUID = 5060337295162113935L;
     
@@ -33,6 +32,7 @@ public class Stake implements Serializable{
     private Double stakeValue;
     
     @NaturalId
+    //@Column(nullable = false, columnDefinition = "timestamp default now()")
     @Column(updatable = false, nullable = false, columnDefinition = "timestamp default now()")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -58,7 +58,7 @@ public class Stake implements Serializable{
     @NotNull
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     //@JsonBackReference(value="stake-race")
-    private @Setter @Getter Race race;
+    private Race race;
     
     public Stake(Long id, User user, Horse horse, Race race, Double stakeValue) {
         this.id = id;
@@ -130,5 +130,13 @@ public class Stake implements Serializable{
     
     public void setHorse(Horse horse) {
         this.horse = horse;
+    }
+
+    public Race getRace() {
+        return race;
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
     }
 }

@@ -12,6 +12,7 @@ import com.uran.util.RandomUtil;
 import com.uran.util.horse.HorseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -47,7 +48,8 @@ public final class RaceScheduler implements ApplicationEventPublisherAware {
     private final RaceSimulationHelper helper;
     private final RaceProcessor processor;
     private final RaceService raceService;
-    
+
+    @Autowired
     public RaceScheduler(RaceSimulationHelper helper, RaceProcessor processor, RaceService raceService) {
         this.helper = helper;
         this.processor = processor;
@@ -58,7 +60,7 @@ public final class RaceScheduler implements ApplicationEventPublisherAware {
     public void startGamble() {
         LOG.info("Race stopped & Gamble Started at {}", now().format(DATE_TIME_FORMATTER));
         
-        stationEventPublisher.publishEvent(new GambleEvent(this, "gamble started"));
+        stationEventPublisher.publishEvent(new GambleEvent(this, " gamble started"));
         
         start = now();
 
@@ -97,7 +99,7 @@ public final class RaceScheduler implements ApplicationEventPublisherAware {
             return;
         }
         
-        stationEventPublisher.publishEvent(new RaceEvent(this, "race started"));
+        stationEventPublisher.publishEvent(new RaceEvent(this, " race started"));
         
         RACE_IS_RUNNING = true;
         USERS_CAN_MAKE_STAKES = false;
@@ -117,7 +119,7 @@ public final class RaceScheduler implements ApplicationEventPublisherAware {
             return;
         }
         
-        stationEventPublisher.publishEvent(new ServiceEvent(this, "service started"));
+        stationEventPublisher.publishEvent(new ServiceEvent(this, " service started"));
         
         RACE_IS_RUNNING = false;
         USERS_CAN_MAKE_STAKES = false;

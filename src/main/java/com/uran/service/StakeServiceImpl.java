@@ -18,8 +18,8 @@ public class StakeServiceImpl implements StakeService{
     
     @Autowired
     private StakeRepository repository;
-    @Autowired
-    private UserService userService;
+    /*@Autowired
+    private UserService userService;*/
     @Autowired
     private AccountService accountService;
     
@@ -124,24 +124,24 @@ public class StakeServiceImpl implements StakeService{
     
     @Override
     public Double getAllCash(final long raceId) {
-        return this.repository.getAllCashByRaceId(raceId);
-        //return this.repository.getStreamByRaceId(raceId).mapToDouble(Stake::getStakeValue).sum();
+        return this.repository.getListByRaceId(raceId).stream()
+                .mapToDouble(Stake::getStakeValue)
+                .sum();
     }
     
     @Override
     @Transactional
-    public void setNotEditable(final long raceId) {
-        this.repository.save(
+    public Long setNotEditable(final long raceId) {
+        return (long) this.repository.save(
                 this.repository.getListByRaceId(raceId).stream()
                         .peek(stake -> stake.setEditable(false))
-                        .collect(Collectors.toList())
-        );
+                        .collect(Collectors.toList())).size();
     }
     
     @Override
     @Transactional
     public void setUneditable(final long raceId) {
-        this.repository.setUneditable(raceId);
+        this.repository.setEditableByRaceId(raceId);
         /*this.repository.save(
                 this.repository.getListByRaceId(raceId).stream()
                         .peek(stake -> stake.setEditable(false))

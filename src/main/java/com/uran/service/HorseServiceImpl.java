@@ -1,7 +1,6 @@
 package com.uran.service;
 
 import com.uran.domain.Horse;
-import com.uran.dto.HorseDto;
 import com.uran.repository.HorseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,13 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.uran.util.horse.HorseUtil.updateFromTo;
-
 @Component(value = "horseService")
 public class HorseServiceImpl implements HorseService {
-    
+
+    private final HorseRepository repository;
+
     @Autowired
-    private HorseRepository repository;
+    public HorseServiceImpl(HorseRepository repository) {
+        this.repository = repository;
+    }
     
     /*@Override
     public Page<Horse> findAll(final Pageable pageable) {

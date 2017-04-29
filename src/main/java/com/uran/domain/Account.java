@@ -25,7 +25,7 @@ public class Account implements Serializable{
     private @Setter @Getter String cardNumber;
     
     @Column(nullable = false)
-    private Double balance;
+    private Double balance = 0.0;
     
     @OneToOne(optional = false)
     private User user;
@@ -34,7 +34,7 @@ public class Account implements Serializable{
         this(null, cardNumber, balance, user);
     }
     
-    public Account(Long id, String cardNumber, Double balance, User user) {
+    private Account(Long id, String cardNumber, Double balance, User user) {
         this.id = id;
         this.cardNumber = cardNumber;
         this.balance = balance;

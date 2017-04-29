@@ -10,8 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -23,10 +22,17 @@ public class StakeRepositoryTest {
     
     @Autowired
     private MockMvc mockMvc;
-    
+
     @Test
+    @WithMockUser(username = "Admin", password = "admin", roles = "ADMIN")
     public void findByUserId() throws Exception {
-       
+        this.mockMvc.perform(
+                get("/api/stakes/search/findByUserId?userId=1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith("application/hal+json;charset=UTF-8"))
+                .andExpect(jsonPath("_embedded.stakes").exists())
+                .andExpect(jsonPath("page.totalElements").value(3));
     }
     
     @Test
@@ -41,7 +47,7 @@ public class StakeRepositoryTest {
     
     @Test
     @WithMockUser(username = "Admin", password = "admin", roles = "ADMIN")
-    public void shouldReturnStakesAsPage() throws Exception {
+    public void shouldReturnStakesByRaceIdAsPage() throws Exception {
         this.mockMvc.perform(get("/api/stakes/search/findByRaceId?raceId=1&page=0"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -73,8 +79,14 @@ public class StakeRepositoryTest {
     }
     
     @Test
-    public void findByHorseIdAndRaceId() throws Exception {
-        
+    @WithMockUser(username = "Admin", password = "admin", roles = "ADMIN")
+    public void shouldReturnStakeByHorseIdAndRaceId() throws Exception {
+        this.mockMvc.perform(
+                get("/api/stakes/search/findByHorseIdAndRaceId?horseId=4&raceId=1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith("application/hal+json;charset=UTF-8"))
+                .andExpect(jsonPath("_embedded.stakes").exists());
     }
     
     @Test
@@ -83,8 +95,14 @@ public class StakeRepositoryTest {
     }
     
     @Test
+    @WithMockUser(username = "Admin", password = "admin", roles = "ADMIN")
     public void findByDateTime() throws Exception {
-        
+        this.mockMvc.perform(
+                get("/api/stakes/search/findByDateTime?dateTime=2016-05-30T10:00:00"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith("application/hal+json;charset=UTF-8"))
+                .andExpect(jsonPath("_embedded.stakes").exists());
     }
     
     @Test
@@ -103,13 +121,47 @@ public class StakeRepositoryTest {
     }
     
     @Test
+    @WithMockUser(username = "Admin", password = "admin", roles = "ADMIN")
     public void findByEditableTrue() throws Exception {
-        
+        this.mockMvc.perform(
+                get("/api/stakes/search/findByEditableTrue"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith("application/hal+json;charset=UTF-8"))
+                .andExpect(jsonPath("_embedded.stakes").exists());
     }
     
     @Test
+    @WithMockUser(username = "Admin", password = "admin", roles = "ADMIN")
     public void findByRaceIdAndWinsTrue() throws Exception {
-        
+        this.mockMvc.perform(
+                get("/api/stakes/search/findByRaceIdAndWinsTrue?raceId=1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith("application/hal+json;charset=UTF-8"))
+                .andExpect(jsonPath("_embedded.stakes").exists());
     }
-    
+
+    @Test
+    @WithMockUser(username = "Admin", password = "admin", roles = "ADMIN")
+    public void getAllCashByRaceId() throws Exception {
+        this.mockMvc.perform(
+                get("/api/stakes/cash/4"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith("application/json;charset=UTF-8"))
+                .andExpect(content().string("200.5"));
+    }
+
+    @Test
+    @WithMockUser(username = "Admin", password = "admin", roles = "ADMIN")
+    public void testSetUneditable() throws Exception {
+        this.mockMvc.perform(post("/api/stakes/search/setEditableByRaceId?raceId=4"))
+                .andDo(print());
+        /*this.mockMvc.perform(get("/api/stakes/search/getListByRaceId?raceId=4"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith("application/hal+json;charset=UTF-8"))
+                .andExpect(jsonPath("_embedded.stakes").exists());*/
+    }
 }

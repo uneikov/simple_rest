@@ -2,11 +2,13 @@ package com.uran.repository;
 
 import com.uran.domain.Race;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 //@RepositoryRestResource(path = "races", collectionResourceRel = "races_list", itemResourceRel = "race")
 //@EnableTransactionManagement
 //@PreAuthorize("hasRole('ROLE_ADMIN')")
+@RepositoryRestResource
 public interface RaceRepository extends JpaRepository<Race, Long> {
     
     @Override

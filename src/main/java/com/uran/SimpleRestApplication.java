@@ -14,14 +14,19 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
 
 @SpringBootApplication
 @EnableTransactionManagement
+//@ComponentScan("com.uran")
 @Import({RestSecurityConfig.class, DataSourceConfig.class, ScheduledTaskConfig.class})
-@PropertySource(value= {"classpath:application.properties"})
+@PropertySource(value= {
+        "classpath:application.properties",
+        "classpath:application-h2.properties",
+        "classpath:application-postgres.properties"})
 @EnableJpaRepositories(basePackages = "com.uran.repository")
 public class SimpleRestApplication extends SpringBootServletInitializer {
     private static final Logger LOG = getLogger(SimpleRestApplication.class);
@@ -54,6 +59,14 @@ public class SimpleRestApplication extends SpringBootServletInitializer {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
+
+    @Bean
+    public DispatcherServlet dispatcherServlet() {
+        DispatcherServlet dispatcherServlet = new DispatcherServlet();
+        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+        return dispatcherServlet;
+    }
+
 }
 
 /*@Bean(name = "authProvider")

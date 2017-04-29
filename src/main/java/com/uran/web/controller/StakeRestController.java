@@ -12,6 +12,7 @@ import com.uran.service.UserService;
 import com.uran.service.scheduler.RaceScheduler;
 import com.uran.util.horse.HorseUtil;
 import com.uran.web.util.RestPreconditions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,10 +31,24 @@ public class StakeRestController {
 
     private UserService userService;
 
+    @Autowired
     public StakeRestController(StakeService stakeService, HorseService horseService, UserService userService) {
         this.stakeService = stakeService;
         this.horseService = horseService;
         this.userService = userService;
+    }
+
+    @GetMapping(value = "/setUneditable/{raceId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void setUneditable(@PathVariable("raceId") final long raceId) {
+        stakeService.setUneditable(raceId);
+    }
+
+    @GetMapping(value = "/cash/{raceId}", produces = APPLICATION_JSON_UTF8_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public Double getAllCash(@PathVariable("raceId") final long raceId) {
+        return stakeService.getAllCash(raceId);
     }
 
     @PostMapping(value = "/add", consumes = APPLICATION_JSON_UTF8_VALUE)
@@ -53,17 +68,13 @@ public class StakeRestController {
     }
 
     private Stake convertToEntity(StakeDto stakeDto) {
-        Horse horse ;
         final Map.Entry<String, String> fullName =
                 HorseUtil.getDeserialized(stakeDto.getFullHorseName()).entrySet().iterator().next();
-        RestPreconditions.checkFound(horse = horseService.findByName(fullName.getKey()),
-                "This horse does not exist, check horse name");
-        //final Horse horse = horseService.findByName(fullName.getKey());
-        /*if (horse == null) {
-            throw new RestResourceNotFoundException("Invalid horse name");
-        }*/
+        final Horse horse = horseService.findByName(fullName.getKey());
+        RestPreconditions.checkFound(horse, "This horse does not exist, check horse name");
         final User user = userService.findOne(AuthorizedUser.id());
         final Race race = RaceScheduler.getCurrentRace();
         return new Stake(null, user, horse, race, stakeDto.getStakeValue());
     }
+
 }

@@ -1,8 +1,10 @@
 package com.uran.dto;
 
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @NoArgsConstructor
@@ -11,10 +13,11 @@ public class StakeDto implements Serializable{
     
     @NotNull(message = "  must not be empty")
     private Double stakeValue;
-    
-    @NotNull(message = "  is required")
+
+    @Size(min = 3, max = 60)
+    @NotEmpty(message = "  is required")
     private String fullHorseName;
-    
+
     public StakeDto(Double stakeValue, String fullHorseName) {
         this.stakeValue = stakeValue;
         this.fullHorseName = fullHorseName;
