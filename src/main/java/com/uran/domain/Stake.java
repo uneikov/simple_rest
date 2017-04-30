@@ -25,7 +25,6 @@ public class Stake implements Serializable{
     private static final long serialVersionUID = 5060337295162113935L;
     
     @Id
-    //@GeneratedValue
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     

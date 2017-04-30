@@ -10,6 +10,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,10 +24,10 @@ import static org.slf4j.LoggerFactory.getLogger;
 @EnableTransactionManagement
 //@ComponentScan("com.uran")
 @Import({RestSecurityConfig.class, DataSourceConfig.class, ScheduledTaskConfig.class})
-@PropertySource(value= {
-        "classpath:application.properties",
-        "classpath:application-h2.properties",
-        "classpath:application-postgres.properties"})
+@PropertySources({
+        @PropertySource("classpath:application.properties"),
+        @PropertySource("classpath:application-h2.properties"),
+        @PropertySource("classpath:application-postgres.properties")})
 @EnableJpaRepositories(basePackages = "com.uran.repository")
 public class SimpleRestApplication extends SpringBootServletInitializer {
     private static final Logger LOG = getLogger(SimpleRestApplication.class);
