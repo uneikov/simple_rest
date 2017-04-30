@@ -29,7 +29,7 @@ public interface StakeRepository extends JpaRepository<Stake, Long> {
     
     List<Stake> findByHorseIdAndRaceId(@Param("horseId") final long horseId, @Param("raceId") final long raceId);
     
-    //Page<Stake> findByRaceIdAndUserId(@Param("raceId") long raceId, @Param("userId") long userId, Pageable pageable);
+    Page<Stake> findByRaceIdAndUserId(@Param("raceId") long raceId, @Param("userId") long userId, Pageable pageable);
     
     List<Stake> findByDateTime(@Param("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) final LocalDateTime dateTime);
     

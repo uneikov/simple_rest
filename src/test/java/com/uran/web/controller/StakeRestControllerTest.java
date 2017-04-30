@@ -8,6 +8,8 @@ import com.uran.service.scheduler.RaceScheduler;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,7 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Transactional
 public class StakeRestControllerTest {
-    
+    private static final Logger LOG = LoggerFactory.getLogger(StakeRestController.class);
+
     @Autowired
     private MockMvc mockMvc;
     
@@ -47,6 +50,7 @@ public class StakeRestControllerTest {
         currentRace.setAccessible(true);
         Race testRace = raceService.findById(4L);
         currentRace.set(testRaceScheduler, testRace);
+        LOG.info("\n\n### Stake Rest Controller Test started ###\n");
     }
     
     @Test

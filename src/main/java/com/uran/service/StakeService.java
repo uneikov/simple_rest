@@ -19,9 +19,7 @@ public interface StakeService {
     
     Page<Stake> findAllByUserId(long id, Pageable pageable);
     
-    //Page<Stake> findAllByRaceIdAndUserId(final long raceId, final long userId, final Pageable pageable);
-        
-    Stake addStake(Stake stake);
+    Page<Stake> findAllByRaceIdAndUserId(final long raceId, final long userId, final Pageable pageable);
     
     void delete(long id);
     

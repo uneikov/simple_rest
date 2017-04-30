@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +17,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 
 @RunWith(SpringRunner.class)
@@ -22,7 +27,7 @@ import java.lang.reflect.Field;
 @Transactional
 @ActiveProfiles("postgres")
 public class StakeServiceTest {
-    //private static final Logger LOG = LoggerFactory.getLogger(StakeServiceTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StakeServiceTest.class);
     
     @Autowired
     private StakeService service;
@@ -40,6 +45,7 @@ public class StakeServiceTest {
         currentRace.setAccessible(true);
         Race testRace = raceService.findById(4L);
         currentRace.set(testRaceScheduler, testRace);
+        LOG.info("\n\n### Stake Service Test started ###\n");
     }
 
     @Test
@@ -65,12 +71,9 @@ public class StakeServiceTest {
     
     @Test
     public void findAllByRaceIdAndUserId() throws Exception {
-        
-    }
-    
-    @Test
-    public void addStake() throws Exception {
-        
+        Assert.assertTrue(
+                this.service.findAllByRaceIdAndUserId(4L, 1L, new PageRequest(0, 10))
+                        .getTotalElements() == 1);
     }
 
     @Test
@@ -112,7 +115,11 @@ public class StakeServiceTest {
     
     @Test
     public void processWinningStakes() throws Exception {
-        
+        List<Stake> stakes = this.service.processWinningStakes(
+                Collections.singletonList(this.service.findById(2L)),
+                new HashMap<Long, Double>(){{put(2L, 35.45);}}
+        );
+        Assert.assertTrue(stakes.size() == 1);
     }
     
     @Test
