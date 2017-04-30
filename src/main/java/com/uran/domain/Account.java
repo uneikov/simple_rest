@@ -17,7 +17,7 @@ public class Account implements Serializable{
     private static final long serialVersionUID = -6091983356638366235L;
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private @Setter @Getter Long id;
     
     @NotEmpty(message = "Card number is required.")

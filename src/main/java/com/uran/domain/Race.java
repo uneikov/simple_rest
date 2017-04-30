@@ -24,7 +24,7 @@ public class Race implements Serializable{
     private static final long serialVersionUID = 7814524545785467671L;
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @NotNull

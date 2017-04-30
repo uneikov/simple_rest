@@ -19,7 +19,7 @@ public class Horse implements Serializable{
     private static final long serialVersionUID = 2714600491390664126L;
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @NotEmpty
