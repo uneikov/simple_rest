@@ -13,9 +13,13 @@ import java.util.List;
 @Component("raceService")
 public class RaceServiceImpl implements RaceService{
     
+    private final RaceRepository repository;
+
     @Autowired
-    private RaceRepository repository;
-    
+    public RaceServiceImpl(RaceRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public Page<Race> findAll(Pageable pageable) {
         return this.repository.findAll(pageable);

@@ -11,9 +11,13 @@ import org.springframework.util.Assert;
 @Transactional
 public class AccountServiceImpl implements AccountService {
     
+    private final AccountRepository repository;
+
     @Autowired
-    private AccountRepository repository;
-    
+    public AccountServiceImpl(AccountRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Account get(long userId) {

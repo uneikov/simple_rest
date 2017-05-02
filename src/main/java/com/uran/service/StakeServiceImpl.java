@@ -16,13 +16,15 @@ import java.util.stream.Collectors;
 @Component(value = "stakeService")
 public class StakeServiceImpl implements StakeService{
     
+    private final StakeRepository repository;
+    private final AccountService accountService;
+
     @Autowired
-    private StakeRepository repository;
-    /*@Autowired
-    private UserService userService;*/
-    @Autowired
-    private AccountService accountService;
-    
+    public StakeServiceImpl(StakeRepository repository, AccountService accountService) {
+        this.repository = repository;
+        this.accountService = accountService;
+    }
+
     @Override
     public Page<Stake> findAll(Pageable pageable){
         return this.repository.findAll(pageable);

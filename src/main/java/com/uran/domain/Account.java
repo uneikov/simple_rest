@@ -1,8 +1,6 @@
 package com.uran.domain;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -18,11 +16,11 @@ public class Account implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private @Setter @Getter Long id;
+    private Long id;
     
     @NotEmpty(message = "Card number is required.")
     @Column
-    private @Setter @Getter String cardNumber;
+    private String cardNumber;
     
     @Column(nullable = false)
     private Double balance = 0.0;
@@ -40,7 +38,16 @@ public class Account implements Serializable{
         this.balance = balance;
         this.user = user;
     }
-    
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Double getBalance() {
         return balance;
     }
@@ -55,5 +62,13 @@ public class Account implements Serializable{
     
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 }
