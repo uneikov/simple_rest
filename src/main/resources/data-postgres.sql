@@ -20,10 +20,10 @@ VALUES ('Station', 'station@gamblingstation.com', '$2a$10$4BB/oW0v.c54SFiRB47gue
 -- password:stationpass
 
 -- Accounts
-INSERT INTO accounts (card_number, balance, user_id) VALUES ('1234432156788765', 10.0, 1);
-INSERT INTO accounts (card_number, balance, user_id) VALUES ('1234432589028765', 15.0, 2);
-INSERT INTO accounts (card_number, balance, user_id) VALUES ('1234433478588765', 0.0, 3);
-INSERT INTO accounts (card_number, balance, user_id) VALUES ('9076632156788765', 100.0, 4);
+INSERT INTO accounts (card_number, balance, user_id) VALUES ('2273114861198385', 10.0, 1);
+INSERT INTO accounts (card_number, balance, user_id) VALUES ('2500842215393147', 15.0, 2);
+INSERT INTO accounts (card_number, balance, user_id) VALUES ('5570902209270285', 0.0, 3);
+INSERT INTO accounts (card_number, balance, user_id) VALUES ('2229681069525770', 100.0, 4);
 
 -- Roles
 INSERT INTO user_roles (role, user_id) VALUES ('ROLE_USER', 1);

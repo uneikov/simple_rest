@@ -6,7 +6,7 @@ import com.uran.domain.Role;
 import com.uran.domain.User;
 import com.uran.service.AccountService;
 import com.uran.service.UserService;
-import com.uran.util.RandomUtil;
+import com.uran.util.card.RandomCreditCardNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +17,15 @@ import java.util.stream.IntStream;
 
 @Service("botFactoryService")
 class BotFactoryService {
+    private final UserService userService;
+    private final AccountService accountService;
+
     @Autowired
-    private UserService userService;
-    @Autowired
-    private AccountService accountService;
-    
+    public BotFactoryService(UserService userService, AccountService accountService) {
+        this.userService = userService;
+        this.accountService = accountService;
+    }
+
     List<User> getBots(int size) {
         
         List<User> users = IntStream
@@ -40,7 +44,8 @@ class BotFactoryService {
         return userService.save(users).stream()
                 .peek(user -> {
                     user.setAccount(accountService.save(new Account(
-                            RandomUtil.getRandomCardNumber(),
+                            //RandomUtil.getRandomCardNumber(),
+                            RandomCreditCardNumberGenerator.generateVisaCardNumber(),
                             0.0d,
                             user
                     )));

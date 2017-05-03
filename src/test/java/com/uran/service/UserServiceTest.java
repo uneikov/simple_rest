@@ -3,7 +3,7 @@ package com.uran.service;
 import com.uran.domain.Account;
 import com.uran.domain.Role;
 import com.uran.domain.User;
-import com.uran.util.RandomUtil;
+import com.uran.util.card.RandomCreditCardNumberGenerator;
 import com.uran.util.user.UserUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -49,7 +49,8 @@ public class UserServiceTest {
                         null,
                         Collections.singleton(Role.ROLE_USER)
         );
-        testUser.setAccount(new Account(RandomUtil.getRandomCardNumber(), 10.0, testUser));
+        //testUser.setAccount(new Account(RandomUtil.getRandomCardNumber(), 10.0, testUser));
+        testUser.setAccount(new Account(RandomCreditCardNumberGenerator.generateMasterCardNumber(), 10.0, testUser));
         this.userService.save(UserUtil.prepareToSave(testUser));
         Assert.assertTrue(this.userService.findAll().size() == 5);
         Assert.assertTrue(this.userService.findOne(5L).getName().equals("testUser"));

@@ -2,6 +2,7 @@ package com.uran.dto;
 
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -17,7 +18,7 @@ public class UserDto implements Serializable {
 
     @NotEmpty
     //@SafeHtml
-    @Size( min = 16, max = 16, message = " must have 16 digits")
+    @CreditCardNumber
     private String cardNumber;
 
     @NotEmpty
@@ -71,10 +72,6 @@ public class UserDto implements Serializable {
     
     public void setEmail(String email) {
         this.email = email;
-    }
-    
-    public boolean isNew() {
-        return id == null;
     }
 
     public String getCardNumber() {

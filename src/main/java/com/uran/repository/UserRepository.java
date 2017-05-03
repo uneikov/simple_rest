@@ -15,10 +15,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     //@Query("select u from User u where u.name = :name")
     User findByName(@Param("name") String name);
-    
-    /*@Override
-    @Modifying
-    @Query("delete from User u where u.id=?1")
-    void delete(@Param("userId") Long userId);*/
-    
+
 }

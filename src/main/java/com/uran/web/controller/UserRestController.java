@@ -6,6 +6,7 @@ import com.uran.service.AccountService;
 import com.uran.service.UserService;
 import com.uran.util.user.UserUtil;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,7 +44,9 @@ public class UserRestController {
     }
 
     private UserDto convertToDto(User user) {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
         return modelMapper.map(user, UserDto.class);
+        //return UserUtil.asTo(user);
     }
 
     private User convertToEntity(UserDto userDto) {

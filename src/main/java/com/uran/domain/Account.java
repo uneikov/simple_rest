@@ -2,6 +2,7 @@ package com.uran.domain;
 
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -17,8 +18,9 @@ public class Account implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @NotEmpty(message = "Card number is required.")
+    @CreditCardNumber
     @Column
     private String cardNumber;
     

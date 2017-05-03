@@ -13,6 +13,9 @@ import java.util.Set;
 public interface AccountRepository extends JpaRepository<Account, Long> {
     
     Account findByUserId(@Param("userId") long userId);
+
     Account findByUserEmailIgnoringCase(@Param("email") String email);
+
     Account findByUserRoles(Set<Role> roles);
+
 }

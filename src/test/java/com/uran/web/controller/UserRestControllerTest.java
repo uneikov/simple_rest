@@ -2,6 +2,7 @@ package com.uran.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uran.dto.UserDto;
+import com.uran.util.card.RandomCreditCardNumberGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,8 @@ public class UserRestControllerTest {
     @Test
     @WithMockUser(username = "Admin", password = "admin", roles = "ADMIN")
     public void shouldAddUserFromUserDto() throws Exception {
-        UserDto added = new UserDto(null, "7777000088885555","testUser", "test@test.com", "000007");
+        String cardNumber = RandomCreditCardNumberGenerator.generateVisaCardNumber();
+        UserDto added = new UserDto(null, cardNumber,"testUser", "test@test.com", "000007");
         this.mockMvc.perform(post("/api/users/add")
                 .with(httpBasic("admin@gmail.com", "admin"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -48,6 +50,6 @@ public class UserRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith("application/hal+json;charset=UTF-8"))
-                .andExpect(jsonPath("cardNumber").value("7777000088885555"));
+                .andExpect(jsonPath("cardNumber").value(cardNumber));
     }
 }
